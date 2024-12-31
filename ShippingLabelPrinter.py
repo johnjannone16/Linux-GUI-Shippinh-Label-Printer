@@ -9,6 +9,10 @@ from reportlab.lib.pagesizes import inch
 import os
 import subprocess
 
+width = 4
+length = 6
+printerName = "ENTERPRINTERNAMEHERE"
+
 def ai_crop_pdf_to_shipping_label(input_pdf_path, output_pdf_path, status_text):
     try:
         status_text.insert(tk.END, "Processing...\n")
@@ -46,7 +50,7 @@ def ai_crop_pdf_to_shipping_label(input_pdf_path, output_pdf_path, status_text):
             cropped_image = cv2.rotate(cropped_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
         # Calculate scaling factor for margins
-        label_width, label_height = 4 * inch, 6 * inch
+        label_width, label_height = width * inch, length * inch
         margin = 1 / 16 * inch
         available_width = label_width - 2 * margin
         available_height = label_height - 2 * margin
@@ -80,9 +84,9 @@ def ai_crop_pdf_to_shipping_label(input_pdf_path, output_pdf_path, status_text):
         os.remove(cropped_image_path)
 
         # Print the label
-        print_command = f"lp -d PRINTERNAMEINCUPS {output_pdf_path}"
+        print_command = f"lp -d {printerName} {output_pdf_path}"
         subprocess.run(print_command, shell=True, check=True)
-        status_text.insert(tk.END, f"Printed USPS label to printer PRINTERNAMEINCUPS.\n")
+        status_text.insert(tk.END, f"Printed USPS label to printer {printerName}.\n")
     except Exception as e:
         status_text.insert(tk.END, f"An error occurred: {e}\n")
 
