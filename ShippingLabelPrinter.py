@@ -82,7 +82,7 @@ def ai_crop_pdf_to_shipping_label(input_pdf_path, output_pdf_path, status_text):
         # Print the label
         print_command = f"lp -d PRINTERNAMEINCUPS {output_pdf_path}"
         subprocess.run(print_command, shell=True, check=True)
-        status_text.insert(tk.END, f"Printed USPS label to printer BY-482BT.\n")
+        status_text.insert(tk.END, f"Printed USPS label to printer PRINTERNAMEINCUPS.\n")
     except Exception as e:
         status_text.insert(tk.END, f"An error occurred: {e}\n")
 
